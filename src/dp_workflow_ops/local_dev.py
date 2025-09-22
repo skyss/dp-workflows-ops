@@ -16,6 +16,5 @@ from pyspark.sql.session import SparkSession
 
 spark: SparkSession = None  # type: ignore Just a dummy variable for type hints
 dbutils = WorkspaceClient().dbutils
-display = IPython.core.display.display_functions.display
 
 __all__ = ["dbutils", "spark"]
