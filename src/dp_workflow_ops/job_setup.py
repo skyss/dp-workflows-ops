@@ -1,10 +1,11 @@
-import contextlib
+from __future__ import annotations
+from typing import TYPE_CHECKING
 
-with contextlib.suppress(ImportError):
-    from .local_dev import dbutils, spark
+if TYPE_CHECKING:
+    from pyspark.sql import SparkSession
 
 
-def set_catalog_and_schema_for_job() -> None:
+def set_catalog_and_schema_for_job(spark: SparkSession) -> None:
     """Retrives catallog and schema from job parameters and sets catalog and schema.
 
     If schema does not exist, it is created."""
