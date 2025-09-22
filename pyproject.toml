@@ -1,0 +1,25 @@
+[project]
+name = "dp-workflow-ops"
+version = "0.1.0"
+description = "Common libraries and utility functions for working with Skyss projects in dp-workflows"
+readme = "README.md"
+authors = [
+    { name = "John Erik Sloper", email = "john.erik.sloper@skyss.no" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "databricks-sdk[notebook]>=0.65.0",
+    "delta-spark>=4.0.0",
+    "ipykernel>=6.30.1",
+    "loguru>=0.7.3",
+    "pyspark>=4.0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
