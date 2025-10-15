@@ -1,6 +1,7 @@
-from loguru import logger
-from delta.tables import DeltaTable
+"""Common functions for interacting with databricks tables."""
 
+from delta.tables import DeltaTable
+from loguru import logger
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.session import SparkSession
 
@@ -25,13 +26,13 @@ def _columns_differ(df_new: DataFrame, df_old: DataFrame) -> bool:
     missing_in_new = set(df_old.schema.names) - set(df_new.schema.names)
     if missing_in_new:
         logger.warning(
-            "The dataframe is missing columns that exist in the table: {missing_in_new}",
+            "The dataframe is missing columns that exist in the table: {missing_in_new}",  # noqa: E501
             missing_in_new=list(missing_in_new),
         )
     missing_in_old = set(df_new.schema.names) - set(df_old.schema.names)
     if missing_in_old:
         logger.warning(
-            "The dataframe has more columns than exist in the table. These will NOT be included: {missing_in_old}",
+            "The dataframe has more columns than exist in the table. These will NOT be included: {missing_in_old}",  # noqa: E501
             missing_in_old=list(missing_in_old),
         )
 
@@ -43,7 +44,7 @@ def merge_into_table(
     table_name: str,
     df: DataFrame,
     id_col: str = "id",
-    allow_mismatch: bool = False,
+    allow_mismatch: bool = False,  # noqa: FBT001, FBT002
 ) -> DataFrame | None:
     """Create og merge into the table with the given DataFrame."""
     if not spark.catalog.tableExists(table_name):
@@ -61,7 +62,8 @@ def merge_into_table(
 
     existing_df = spark.read.table(table_name).limit(0)
     if _columns_differ(df, existing_df) and not allow_mismatch:
-        raise RuntimeError("Schema of tables to not match. Cannot upsert!")
+        msg = "Schema of tables to not match. Cannot upsert!"
+        raise RuntimeError(msg)
 
     return (
         DeltaTable.forName(spark, table_name)
