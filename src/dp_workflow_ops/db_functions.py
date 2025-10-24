@@ -7,10 +7,7 @@ from pyspark.sql.session import SparkSession
 
 
 def replace_table(table_name: str, df: DataFrame) -> None:
-    """Replace or create the table including the schema with the given DataFrame.
-
-    This will automatically follow the naming conventions for the Data Mesh project.
-    """
+    """Replace or create the table including the schema with the given DataFrame."""
     logger.info(
         "Overwriting {table_name}.",
         table_name=table_name,
@@ -71,7 +68,7 @@ def merge_into_table(
         .merge(
             source=df.alias("updates"),
             condition=f"""
-                target.{id_col} = updates.{id_col}
+                target.`{id_col}` = updates.`{id_col}`
                 """,
         )
         .whenMatchedUpdateAll()
