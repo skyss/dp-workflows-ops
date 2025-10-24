@@ -15,6 +15,7 @@ def replace_table(table_name: str, df: DataFrame) -> None:
     return (
         df.write.mode("overwrite")
         .option("overwriteSchema", "true")
+        .option("clusterByAuto", "true")
         .saveAsTable(table_name)
     )
 
@@ -51,7 +52,7 @@ def merge_into_table(
                 table_name=table_name,
             )
 
-        df.write.saveAsTable(table_name)
+        df.write.option("clusterByAuto", "true").saveAsTable(table_name)
         return None
 
     if logger:
