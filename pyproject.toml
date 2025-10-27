@@ -1,6 +1,6 @@
 [project]
 name = "dp-workflow-ops"
-version = "0.1.2"
+version = "0.1.4"
 description = "Common libraries and utility functions for working with Skyss projects in dp-workflows"
 readme = "README.md"
 authors = [
